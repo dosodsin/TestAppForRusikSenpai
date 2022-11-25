@@ -1,4 +1,4 @@
-package com.bormotov_vi.model
+package com.bormotov_vi.model.user
 
 data class UsersItem(
     val address: Address,

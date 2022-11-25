@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TestAppForRusikSenpai">
         <activity
-            android:name=".UsersPostsAndAlbum"
+            android:name=".UserPostsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UsersPostsAndAlbumsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
