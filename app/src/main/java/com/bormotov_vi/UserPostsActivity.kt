@@ -1,15 +1,13 @@
 package com.bormotov_vi
 
-import android.os.Build
+import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.bormotov_vi.databinding.ActivityUserPostsBinding
 import com.bormotov_vi.model.post.UserPostItem
 import com.google.gson.GsonBuilder
 import okhttp3.*
 import java.io.IOException
-import kotlin.streams.toList
 
 class UserPostsActivity : AppCompatActivity() {
 
@@ -26,9 +24,19 @@ class UserPostsActivity : AppCompatActivity() {
         var arguments = intent.extras
         userId = arguments?.getInt("userId")
 
+        val postClickListener: PostAdapter.PostActionListener =
+            object : PostAdapter.PostActionListener {
+                override fun onPostClickListener(post: UserPostItem, position: Int) {
+                    val intent = Intent(this@UserPostsActivity, CommentsActivity::class.java)
+                    intent.putExtra("postId", post.id)
+                    startActivity(intent)
+                }
+
+            }
+
         getPosts {
             runOnUiThread {
-                adapter = PostAdapter(it)
+                adapter = PostAdapter(it, postClickListener)
                 binding!!.recyclerViewPost.adapter = adapter
             }
         }

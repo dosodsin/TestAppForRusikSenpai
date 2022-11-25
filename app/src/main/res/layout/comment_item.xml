@@ -19,43 +19,43 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/userNameTextView"
+            android:id="@+id/commentNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Test Test"
+            android:text="Name"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/userEmailTextView"
+            android:id="@+id/commentEmailTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="someEmail@gmail.com"
+            android:text="Email"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userNameTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/commentNameTextView" />
 
         <TextView
-            android:id="@+id/userCityTextView"
+            android:id="@+id/commentBodyTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="city"
+            android:text="Body"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userEmailTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/commentEmailTextView" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
