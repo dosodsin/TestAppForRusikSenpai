@@ -1,10 +1,10 @@
-package com.bormotov_vi
+package com.bormotov_vi.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bormotov_vi.databinding.AlbumItemBinding
-import com.bormotov_vi.model.album.Album
+import com.bormotov_vi.domain.model.album.Album
 
 class AlbumsAdapter(
     private val albums: List<Album>, private var albumActionListener: (Album) -> Unit

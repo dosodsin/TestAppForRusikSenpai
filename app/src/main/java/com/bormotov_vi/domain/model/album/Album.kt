@@ -1,4 +1,4 @@
-package com.bormotov_vi.model.album
+package com.bormotov_vi.domain.model.album
 
 data class Album(
     val userId:Int,

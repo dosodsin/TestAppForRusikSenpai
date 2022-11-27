@@ -1,10 +1,10 @@
-package com.bormotov_vi
+package com.bormotov_vi.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bormotov_vi.databinding.PhotoItemBinding
-import com.bormotov_vi.model.photo.Photo
+import com.bormotov_vi.domain.model.photo.Photo
 import com.bumptech.glide.Glide
 
 class PhotoAdapter(private val photos: List<Photo>) :

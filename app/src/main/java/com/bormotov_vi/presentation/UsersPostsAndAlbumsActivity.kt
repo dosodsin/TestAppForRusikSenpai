@@ -1,4 +1,4 @@
-package com.bormotov_vi
+package com.bormotov_vi.presentation
 
 import android.content.Intent
 import android.os.Bundle

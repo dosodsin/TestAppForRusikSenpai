@@ -14,22 +14,22 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.TestAppForRusikSenpai">
         <activity
-            android:name=".UserPhotosActivity"
+            android:name=".presentation.UserPhotosActivity"
             android:exported="false" />
         <activity
-            android:name=".UserAlbumsActivity"
+            android:name=".presentation.UserAlbumsActivity"
             android:exported="false" />
         <activity
-            android:name=".CommentsActivity"
+            android:name=".presentation.CommentsActivity"
             android:exported="false" />
         <activity
-            android:name=".UserPostsActivity"
+            android:name=".presentation.UserPostsActivity"
             android:exported="false" />
         <activity
-            android:name=".UsersPostsAndAlbumsActivity"
+            android:name=".presentation.UsersPostsAndAlbumsActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.users_screen.UsersActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

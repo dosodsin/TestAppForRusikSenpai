@@ -1,4 +1,4 @@
-package com.bormotov_vi.model.comment
+package com.bormotov_vi.domain.model.comment
 
 data class Comment(
     val body: String,

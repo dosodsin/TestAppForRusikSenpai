@@ -1,9 +1,9 @@
-package com.bormotov_vi
+package com.bormotov_vi.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bormotov_vi.databinding.ActivityCommentsBinding
-import com.bormotov_vi.model.comment.Comment
+import com.bormotov_vi.domain.model.comment.Comment
 import com.google.gson.GsonBuilder
 import okhttp3.*
 import java.io.IOException

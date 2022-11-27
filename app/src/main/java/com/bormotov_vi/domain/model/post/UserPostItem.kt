@@ -1,4 +1,4 @@
-package com.bormotov_vi.model.post
+package com.bormotov_vi.domain.model.post
 
 data class UserPostItem(
     val body: String,

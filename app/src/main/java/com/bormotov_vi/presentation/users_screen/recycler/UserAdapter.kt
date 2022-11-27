@@ -1,19 +1,15 @@
-package com.bormotov_vi
+package com.bormotov_vi.presentation.users_screen.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bormotov_vi.databinding.ItemUserBinding
-import com.bormotov_vi.model.user.UsersItem
+import com.bormotov_vi.domain.model.user.UsersItem
 
 class UserAdapter(
     private var users: List<UsersItem>,
-    private var userActionListener: UserActionListener
+    private var userActionListener: (UsersItem) -> Unit
 ) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
-
-    interface UserActionListener {
-        fun onUserClickListener(user: UsersItem, position: Int)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -29,7 +25,7 @@ class UserAdapter(
             userEmailTextView.text = user.email
             userCityTextView.text = user.address.city
             holder.itemView.setOnClickListener {
-                userActionListener.onUserClickListener(user, position)
+                userActionListener(user)
             }
         }
     }

@@ -1,10 +1,10 @@
-package com.bormotov_vi
+package com.bormotov_vi.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bormotov_vi.databinding.CommentItemBinding
-import com.bormotov_vi.model.comment.Comment
+import com.bormotov_vi.domain.model.comment.Comment
 
 class CommentAdapter(
     private var comments: List<Comment>

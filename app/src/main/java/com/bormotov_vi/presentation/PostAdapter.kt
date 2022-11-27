@@ -1,10 +1,10 @@
-package com.bormotov_vi
+package com.bormotov_vi.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bormotov_vi.databinding.ItemPostsBinding
-import com.bormotov_vi.model.post.UserPostItem
+import com.bormotov_vi.domain.model.post.UserPostItem
 
 class PostAdapter(
     private var posts: List<UserPostItem>, private var postActionListener: PostActionListener

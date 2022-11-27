@@ -1,10 +1,10 @@
-package com.bormotov_vi
+package com.bormotov_vi.presentation
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bormotov_vi.databinding.ActivityUserPostsBinding
-import com.bormotov_vi.model.post.UserPostItem
+import com.bormotov_vi.domain.model.post.UserPostItem
 import com.google.gson.GsonBuilder
 import okhttp3.*
 import java.io.IOException

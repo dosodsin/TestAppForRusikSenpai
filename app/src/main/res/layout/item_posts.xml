@@ -18,6 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- try to use Barrier-->
+
         <TextView
             android:id="@+id/bodyTextView"
             android:layout_width="wrap_content"
@@ -53,12 +55,12 @@
             android:layout_marginStart="80dp"
             android:layout_marginTop="8dp"
             android:ellipsize="end"
-            android:lines="1"
+            app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Title" />
+            tools:text="asdfkjoashdfkl;asjhdflaas;dlfkas;ldfkjal;skdjf;lasjf;lasdkjfksjhdfkalsjhdflaksjdhf;askljdhflaksjhdflkasjdhflkasjdhfasjhdflaksjhdfkalsjhdflaksjdhf;askljdhflaksjhdflkasjdhflkasjdhfasjhdflaksjhdfkalsjhdflaksjdhf;askljdhflaksjhdflkasjdhflkasjdhf" />
 
         <TextView
             android:id="@+id/postBodyTextView"
