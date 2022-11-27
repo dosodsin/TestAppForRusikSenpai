@@ -2,42 +2,38 @@ package com.bormotov_vi
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.bormotov_vi.databinding.ActivityCommentsBinding
-import com.bormotov_vi.model.comment.Comment
+import com.bormotov_vi.databinding.ActivityUserPhotosBinding
+import com.bormotov_vi.model.photo.Photo
 import com.google.gson.GsonBuilder
 import okhttp3.*
 import java.io.IOException
 
-class CommentsActivity : AppCompatActivity() {
+class UserPhotosActivity : AppCompatActivity() {
 
-    private var binding: ActivityCommentsBinding? = null
-    private var adapter: CommentAdapter? = null
-    private val URL = "https://jsonplaceholder.typicode.com/comments"
+    private var binding: ActivityUserPhotosBinding? = null
+    private var adapter: PhotoAdapter? = null
+    private val URL = "https://jsonplaceholder.typicode.com/photos"
     private var client: OkHttpClient = OkHttpClient()
-    private var postId: Int? = null
+    private var albumId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCommentsBinding.inflate(layoutInflater)
+        binding = ActivityUserPhotosBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
         var arguments = intent.extras
-        postId = arguments?.getInt("postId")
+        albumId = arguments?.getInt("albumId")
 
-        getComments {
+        getPhotos {
             runOnUiThread {
-                adapter = CommentAdapter(it)
-                binding!!.commentsRecyclerView.adapter = adapter
+                adapter = PhotoAdapter(it)
+                binding!!.photoRecyclerView.adapter = adapter
             }
-        }
-
-        binding!!.activityCommentsBackImage.setOnClickListener {
-            super.onBackPressed()
         }
 
     }
 
-    private fun getComments(callback: (List<Comment>) -> Unit) {
+    private fun getPhotos(callback: (List<Photo>) -> Unit) {
         val request = Request.Builder()
             .url(URL)
             .build()
@@ -52,7 +48,7 @@ class CommentsActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val body = response.body?.string()
                     val gson = GsonBuilder().create()
-                    var result = gson.fromJson(body, Array<Comment>::class.java).toList()
+                    var result = gson.fromJson(body, Array<Photo>::class.java).toList()
                     result = parseResult(result)
                     callback(result)
                 }
@@ -61,11 +57,8 @@ class CommentsActivity : AppCompatActivity() {
         })
     }
 
-
-    private fun parseResult(result: List<Comment>): List<Comment> {
-        return result.filter {
-            it.postId == postId
-        }
+    private fun parseResult(result: List<Photo>): List<Photo> {
+        return result.filter { it.albumId == albumId }
     }
 
 }

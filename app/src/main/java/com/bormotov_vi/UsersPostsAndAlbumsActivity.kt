@@ -16,11 +16,20 @@ class UsersPostsAndAlbumsActivity : AppCompatActivity() {
 
         var arguments = intent.extras
         var userId = arguments?.getInt("userId")
-        var button = binding?.postButton
-        button?.setOnClickListener {
+        var postsButton = binding?.postButton
+        var albumsButton = binding?.albumButton
+        postsButton?.setOnClickListener {
             val intent = Intent(this@UsersPostsAndAlbumsActivity, UserPostsActivity::class.java)
             intent.putExtra("userId", userId)
             startActivity(intent)
+        }
+        albumsButton?.setOnClickListener {
+            val intent = Intent(this@UsersPostsAndAlbumsActivity, UserAlbumsActivity::class.java)
+            intent.putExtra("userId", userId)
+            startActivity(intent)
+        }
+        binding!!.activityPostAndAlbumsBackImage.setOnClickListener {
+            super.onBackPressed()
         }
     }
 }

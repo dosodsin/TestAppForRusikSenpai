@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">TestAppForRusikSenpai</string>
+    <string name="userItemName">Name:</string>
+    <string name="userItemEmail">Email:</string>
+    <string name="city">City:</string>
+    <string name="postItemTitle">Title:</string>
+    <string name="postItemBody">Body:</string>
+    <string name="commentItemName">Name:</string>
+    <string name="commentItemEmail">Email:</string>
+    <string name="commentItemBody">Body:</string>
+    <string name="itemUserToolbarText">Вернуться к предыдущему экрану</string>
+    <string name="userPostsAndAlbumsButtonPost">Posts</string>
+    <string name="userPostsAndAlbumsButtonAlbums">Albums</string>
+    <string name="albumItemTitle">Title:</string>
+    <string name="photoItemTitle">Title:</string>
 </resources>
