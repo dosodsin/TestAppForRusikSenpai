@@ -21,7 +21,7 @@ class AlbumsAdapter(
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
         val album = albums[position]
         with(holder.binding) {
-            albumTitle.text = album.title
+            albumTextView.text = album.title
             holder.itemView.setOnClickListener {
                 albumActionListener.onAlbumClickListener(album, position)
             }
