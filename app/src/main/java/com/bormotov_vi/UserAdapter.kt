@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bormotov_vi.databinding.ItemUserBinding
 import com.bormotov_vi.model.user.UsersItem
 
-
 class UserAdapter(
-    private var users: List<UsersItem>, private var userActionListener: UserActionListener
+    private var users: List<UsersItem>,
+    private var userActionListener: UserActionListener
 ) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     interface UserActionListener {
@@ -37,5 +37,4 @@ class UserAdapter(
     override fun getItemCount(): Int = users.size
 
     class UserViewHolder(val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root)
-
 }

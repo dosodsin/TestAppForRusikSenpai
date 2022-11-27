@@ -21,7 +21,7 @@ class CommentsActivity : AppCompatActivity() {
         binding = ActivityCommentsBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
-        var arguments = intent.extras
+        val arguments = intent.extras
         postId = arguments?.getInt("postId")
 
         getComments {

@@ -14,10 +14,11 @@ class UsersPostsAndAlbumsActivity : AppCompatActivity() {
         binding = ActivityUsersPostsAndAlbumsBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
-        var arguments = intent.extras
-        var userId = arguments?.getInt("userId")
-        var postsButton = binding?.postButton
-        var albumsButton = binding?.albumButton
+        val arguments = intent.extras
+        val userId = arguments?.getInt("userId")
+        val postsButton = binding?.postButton
+        val albumsButton = binding?.albumButton
+
         postsButton?.setOnClickListener {
             val intent = Intent(this@UsersPostsAndAlbumsActivity, UserPostsActivity::class.java)
             intent.putExtra("userId", userId)

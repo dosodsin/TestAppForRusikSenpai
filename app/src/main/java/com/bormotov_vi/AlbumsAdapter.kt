@@ -7,7 +7,7 @@ import com.bormotov_vi.databinding.AlbumItemBinding
 import com.bormotov_vi.model.album.Album
 
 class AlbumsAdapter(
-    private val albums: List<Album>, private var albumActionListener: AlbumActionListener
+    private val albums: List<Album>, private var albumActionListener: (Album) -> Unit
 ) : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>() {
 
 
@@ -23,7 +23,7 @@ class AlbumsAdapter(
         with(holder.binding) {
             albumTextView.text = album.title
             holder.itemView.setOnClickListener {
-                albumActionListener.onAlbumClickListener(album, position)
+                albumActionListener(album)
             }
         }
     }

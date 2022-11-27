@@ -21,7 +21,7 @@ class UserPhotosActivity : AppCompatActivity() {
         binding = ActivityUserPhotosBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
-        var arguments = intent.extras
+        val arguments = intent.extras
         albumId = arguments?.getInt("albumId")
 
         getPhotos {
@@ -57,8 +57,7 @@ class UserPhotosActivity : AppCompatActivity() {
         })
     }
 
-    private fun parseResult(result: List<Photo>): List<Photo> {
-        return result.filter { it.albumId == albumId }
-    }
+    private fun parseResult(result: List<Photo>): List<Photo> =
+        result.filter { it.albumId == albumId }
 
 }

@@ -25,24 +25,19 @@ class UserAlbumsActivity : AppCompatActivity() {
         var arguments = intent.extras
         userId = arguments?.getInt("userId")
 
-        val albumActionListener: AlbumsAdapter.AlbumActionListener =
-            object : AlbumsAdapter.AlbumActionListener {
-                override fun onAlbumClickListener(album: Album, position: Int) {
-                    val intent = Intent(this@UserAlbumsActivity, UserPhotosActivity::class.java)
-                    intent.putExtra("albumId", album.id)
-                    startActivity(intent)
-                }
-            }
-
         getAlbums {
             runOnUiThread {
-                adapter = AlbumsAdapter(it, albumActionListener)
+                adapter = AlbumsAdapter(it) {
+                    val intent = Intent(this@UserAlbumsActivity, UserPhotosActivity::class.java)
+                    intent.putExtra("albumId", it.id)
+                    startActivity(intent)
+                }
                 binding!!.recyclerViewPost.adapter = adapter
             }
         }
 
-        binding!!.albumsToolbarImageView.setOnClickListener {
-            super.onBackPressed()
+        binding?.toolbar?.albumsToolbarImageView?.setOnClickListener {
+            onBackPressed()
         }
     }
 
@@ -56,22 +51,15 @@ class UserAlbumsActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
 
-
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
                     val body = response.body?.string()
                     val gson = GsonBuilder().create()
-                    var result = gson.fromJson(body, Array<Album>::class.java).toList()
-                    result = parseResult(result)
-                    callback(result)
+                    val result = gson.fromJson(body, Array<Album>::class.java).toList()
+                    val filteredResult = result.filter { it.userId == userId }
+                    callback(filteredResult)
                 }
-
             }
         })
     }
-
-    private fun parseResult(result: List<Album>): List<Album> {
-        return result.filter { it.userId == userId }
-    }
-
 }

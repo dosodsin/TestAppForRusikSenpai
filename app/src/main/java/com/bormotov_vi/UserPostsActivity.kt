@@ -21,7 +21,7 @@ class UserPostsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUserPostsBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
-        var arguments = intent.extras
+        val arguments = intent.extras
         userId = arguments?.getInt("userId")
 
         val postClickListener: PostAdapter.PostActionListener =
@@ -31,7 +31,6 @@ class UserPostsActivity : AppCompatActivity() {
                     intent.putExtra("postId", post.id)
                     startActivity(intent)
                 }
-
             }
 
         getPosts {
@@ -41,11 +40,10 @@ class UserPostsActivity : AppCompatActivity() {
             }
         }
 
-        binding!!.itemPostToolbarImageView.setOnClickListener {
-            super.onBackPressed()
+        binding?.itemPostToolbarImageView?.setOnClickListener {
+            onBackPressed()
         }
     }
-
 
     private fun getPosts(callback: (List<UserPostItem>) -> Unit) {
         val request = Request.Builder()
@@ -57,7 +55,6 @@ class UserPostsActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
 
-
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
                     val body = response.body?.string()
@@ -66,13 +63,10 @@ class UserPostsActivity : AppCompatActivity() {
                     result = parseResult(result)
                     callback(result)
                 }
-
             }
         })
     }
 
-
-    private fun parseResult(result: List<UserPostItem>): List<UserPostItem> {
-        return result.filter { it.userId == userId }
-    }
+    private fun parseResult(result: List<UserPostItem>): List<UserPostItem> =
+        result.filter { it.userId == userId }
 }
