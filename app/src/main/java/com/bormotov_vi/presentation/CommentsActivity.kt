@@ -31,7 +31,7 @@ class CommentsActivity : AppCompatActivity() {
             }
         }
 
-        binding!!.activityCommentsBackImage.setOnClickListener {
+        binding?.toolbar?.albumsToolbarImageView?.setOnClickListener {
             super.onBackPressed()
         }
 

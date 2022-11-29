@@ -40,7 +40,7 @@ class UserPostsActivity : AppCompatActivity() {
             }
         }
 
-        binding?.itemPostToolbarImageView?.setOnClickListener {
+        binding?.toolbar?.albumsToolbarImageView?.setOnClickListener {
             onBackPressed()
         }
     }

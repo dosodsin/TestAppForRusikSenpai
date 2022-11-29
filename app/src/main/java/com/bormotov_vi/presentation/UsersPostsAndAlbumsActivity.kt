@@ -29,7 +29,7 @@ class UsersPostsAndAlbumsActivity : AppCompatActivity() {
             intent.putExtra("userId", userId)
             startActivity(intent)
         }
-        binding!!.activityPostAndAlbumsBackImage.setOnClickListener {
+        binding?.toolbar?.albumsToolbarImageView?.setOnClickListener {
             super.onBackPressed()
         }
     }
