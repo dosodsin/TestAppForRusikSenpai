@@ -1,4 +1,4 @@
-package com.bormotov_vi.presentation
+package com.bormotov_vi.presentation.users_photos.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

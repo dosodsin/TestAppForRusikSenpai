@@ -1,4 +1,4 @@
-package com.bormotov_vi.presentation
+package com.bormotov_vi.presentation.users_posts.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,12 +7,9 @@ import com.bormotov_vi.databinding.ItemPostsBinding
 import com.bormotov_vi.domain.model.post.UserPostItem
 
 class PostAdapter(
-    private var posts: List<UserPostItem>, private var postActionListener: PostActionListener
+    private var posts: List<UserPostItem>,
+    private var postActionListener: (UserPostItem) -> Unit
 ) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
-
-    interface PostActionListener {
-        fun onPostClickListener(post: UserPostItem, position: Int)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -27,7 +24,7 @@ class PostAdapter(
             postBodyTextView.text = post.title
             postTitleTextView.text = post.body
             holder.itemView.setOnClickListener {
-                postActionListener.onPostClickListener(post, position)
+                postActionListener(post)
             }
         }
     }

@@ -1,9 +1,11 @@
-package com.bormotov_vi.presentation
+package com.bormotov_vi.presentation.users_posts_and_albums
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bormotov_vi.databinding.ActivityUsersPostsAndAlbumsBinding
+import com.bormotov_vi.presentation.users_albums.UserAlbumsActivity
+import com.bormotov_vi.presentation.users_posts.UserPostsActivity
 
 class UsersPostsAndAlbumsActivity : AppCompatActivity() {
 
@@ -30,7 +32,7 @@ class UsersPostsAndAlbumsActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding?.toolbar?.albumsToolbarImageView?.setOnClickListener {
-            super.onBackPressed()
+            onBackPressed()
         }
     }
 }

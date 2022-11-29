@@ -1,4 +1,4 @@
-package com.bormotov_vi.presentation
+package com.bormotov_vi.presentation.users_albums.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,8 @@ import com.bormotov_vi.databinding.AlbumItemBinding
 import com.bormotov_vi.domain.model.album.Album
 
 class AlbumsAdapter(
-    private val albums: List<Album>, private var albumActionListener: (Album) -> Unit
+    private val albums: List<Album>,
+    private var albumActionListener: (Album) -> Unit
 ) : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>() {
 
 
@@ -32,8 +33,4 @@ class AlbumsAdapter(
 
     class AlbumViewHolder(val binding: AlbumItemBinding) :
         RecyclerView.ViewHolder(binding.root)
-
-    interface AlbumActionListener {
-        fun onAlbumClickListener(album: Album, position: Int)
-    }
 }

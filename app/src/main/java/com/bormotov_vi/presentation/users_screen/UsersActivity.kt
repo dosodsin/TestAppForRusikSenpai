@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bormotov_vi.databinding.ActivityMainBinding
 import com.bormotov_vi.domain.user_interactor.UsersInteractor
 import com.bormotov_vi.domain.user_interactor.UsersInteractorImpl
-import com.bormotov_vi.presentation.UsersPostsAndAlbumsActivity
+import com.bormotov_vi.presentation.users_posts_and_albums.UsersPostsAndAlbumsActivity
 import com.bormotov_vi.presentation.users_screen.recycler.UserAdapter
 
 class UsersActivity : AppCompatActivity() {

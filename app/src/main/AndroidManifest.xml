@@ -15,19 +15,19 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.TestAppForRusikSenpai">
         <activity
-            android:name=".presentation.UserPhotosActivity"
+            android:name=".presentation.users_photos.UserPhotosActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.UserAlbumsActivity"
+            android:name=".presentation.users_albums.UserAlbumsActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.CommentsActivity"
+            android:name=".presentation.users_comments.CommentsActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.UserPostsActivity"
+            android:name=".presentation.users_posts.UserPostsActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.UsersPostsAndAlbumsActivity"
+            android:name=".presentation.users_posts_and_albums.UsersPostsAndAlbumsActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.users_screen.UsersActivity"
