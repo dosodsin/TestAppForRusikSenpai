@@ -5,27 +5,30 @@ import com.bormotov_vi.domain.model.comment.Comment
 import com.bormotov_vi.domain.model.photo.Photo
 import com.bormotov_vi.domain.model.post.UserPostItem
 import com.bormotov_vi.domain.model.user.UsersItem
+import retrofit2.Response
 
-class Repository {
+class Repository(
+    private val api: UserApi
+) {
 
-    fun getUsers(callback: (List<UsersItem>) -> Unit) {
-        RetrofitInstance.api.getUsers(callback)
+    fun getUsers(callback: (Response<List<UsersItem>>) -> Unit) {
+        callback(api.getUsers())
     }
 
     fun getPosts(callback: (List<UserPostItem>) -> Unit) {
-        RetrofitInstance.api.getPosts(callback)
+        api.getPosts(callback)
     }
 
     fun getComments(callback: (List<Comment>) -> Unit) {
-        RetrofitInstance.api.getComments(callback)
+        api.getComments(callback)
     }
 
     fun getAlbums(callback: (List<Album>) -> Unit) {
-        RetrofitInstance.api.getAlbums(callback)
+        api.getAlbums(callback)
     }
 
     fun getPhotos(callback: (List<Photo>) -> Unit) {
-        RetrofitInstance.api.getPhotos(callback)
+        api.getPhotos(callback)
     }
 
 }

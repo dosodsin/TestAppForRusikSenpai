@@ -3,7 +3,7 @@ package com.bormotov_vi.presentation.users_albums
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.bormotov_vi.RusikSunpaiApplication
+import com.bormotov_vi.RusikSenpaiApplication
 import com.bormotov_vi.databinding.ActivityUserAlbumsBinding
 import com.bormotov_vi.domain.retrofit.Repository
 import com.bormotov_vi.presentation.users_albums.recycler.AlbumsAdapter
@@ -14,8 +14,7 @@ class UserAlbumsActivity : AppCompatActivity() {
     private var adapter: AlbumsAdapter? = null
     private var userId: Int? = null
     private var binding: ActivityUserAlbumsBinding? = null
-    private val repository: Repository
-        get() = (applicationContext as RusikSunpaiApplication).repository
+    private val repository: Repository = RusikSenpaiApplication.repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

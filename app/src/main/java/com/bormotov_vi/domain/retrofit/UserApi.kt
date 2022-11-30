@@ -5,11 +5,12 @@ import com.bormotov_vi.domain.model.comment.Comment
 import com.bormotov_vi.domain.model.photo.Photo
 import com.bormotov_vi.domain.model.post.UserPostItem
 import com.bormotov_vi.domain.model.user.UsersItem
+import retrofit2.Response
 import retrofit2.http.GET
 
 interface UserApi {
     @GET("./users")
-    fun getUsers(callback: (List<UsersItem>) -> Unit)
+    fun getUsers(): Response<List<UsersItem>>
 
     @GET("./posts")
     fun getPosts(callback: (List<UserPostItem>) -> Unit)
