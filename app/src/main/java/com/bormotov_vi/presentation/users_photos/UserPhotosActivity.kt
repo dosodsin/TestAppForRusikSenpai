@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bormotov_vi.RusikSenpaiApplication
 import com.bormotov_vi.databinding.ActivityUserPhotosBinding
-import com.bormotov_vi.domain.retrofit.Repository
+import com.bormotov_vi.domain.user_interactor.UsersInteractor
 import com.bormotov_vi.presentation.users_photos.recycler.PhotoAdapter
 
 class UserPhotosActivity : AppCompatActivity() {
@@ -12,7 +12,7 @@ class UserPhotosActivity : AppCompatActivity() {
     private var binding: ActivityUserPhotosBinding? = null
     private var adapter: PhotoAdapter? = null
     private var albumId: Int? = null
-    private val repository: Repository = RusikSenpaiApplication.repository
+    private val intercator: UsersInteractor = RusikSenpaiApplication.interactor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +22,7 @@ class UserPhotosActivity : AppCompatActivity() {
         val arguments = intent.extras
         albumId = arguments?.getInt("albumId")
 
-        repository.getPhotos {
+        intercator.receivePhotos {
             runOnUiThread {
                 adapter = PhotoAdapter(it)
                 binding!!.photoRecyclerView.adapter = adapter

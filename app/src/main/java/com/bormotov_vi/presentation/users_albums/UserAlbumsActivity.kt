@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bormotov_vi.RusikSenpaiApplication
 import com.bormotov_vi.databinding.ActivityUserAlbumsBinding
-import com.bormotov_vi.domain.retrofit.Repository
+import com.bormotov_vi.domain.user_interactor.UsersInteractor
 import com.bormotov_vi.presentation.users_albums.recycler.AlbumsAdapter
 import com.bormotov_vi.presentation.users_photos.UserPhotosActivity
 
@@ -14,7 +14,7 @@ class UserAlbumsActivity : AppCompatActivity() {
     private var adapter: AlbumsAdapter? = null
     private var userId: Int? = null
     private var binding: ActivityUserAlbumsBinding? = null
-    private val repository: Repository = RusikSenpaiApplication.repository
+    private val intercator: UsersInteractor = RusikSenpaiApplication.interactor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +24,7 @@ class UserAlbumsActivity : AppCompatActivity() {
         var arguments = intent.extras
         userId = arguments?.getInt("userId")
 
-        repository.getAlbums {
+        intercator.receiveAlbums {
             runOnUiThread {
                 adapter = AlbumsAdapter(it) {
                     val intent = Intent(this@UserAlbumsActivity, UserPhotosActivity::class.java)

@@ -8,7 +8,7 @@ import com.bormotov_vi.domain.model.post.UserPostItem
 import com.bormotov_vi.domain.model.user.UsersItem
 
 class UsersInteractorImpl(
-    private val repository: UsersRepository = UsersRepositoryImpl()
+    private val repository: UserRepository = UsersRepositoryImpl()
 ) : UsersInteractor {
     override fun receiveUsers(callback: (List<UsersItem>) -> Unit) =
         repository.receiveUsers(callback)
@@ -19,8 +19,9 @@ class UsersInteractorImpl(
     override fun receiveComments(callback: (List<Comment>) -> Unit) =
         repository.receiveComments(callback)
 
+    override fun receiveAlbums(callback: (List<Album>) -> Unit) =
+        repository.receiveAlbums(callback)
 
-    override fun receiveAlbums(callback: (List<Album>) -> Unit) = repository.receiveAlbums(callback)
-
-    override fun receivePhotos(callback: (List<Photo>) -> Unit) = repository.receivePhotos(callback)
+    override fun receivePhotos(callback: (List<Photo>) -> Unit) =
+        repository.receivePhotos(callback)
 }

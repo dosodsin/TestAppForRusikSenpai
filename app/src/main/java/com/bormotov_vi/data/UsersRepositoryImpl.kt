@@ -5,121 +5,95 @@ import com.bormotov_vi.domain.model.comment.Comment
 import com.bormotov_vi.domain.model.photo.Photo
 import com.bormotov_vi.domain.model.post.UserPostItem
 import com.bormotov_vi.domain.model.user.UsersItem
-import com.bormotov_vi.domain.user_interactor.UsersRepository
-import com.google.gson.GsonBuilder
-import okhttp3.*
-import java.io.IOException
+import com.bormotov_vi.domain.retrofit.RetrofitInstance.api
+import com.bormotov_vi.domain.user_interactor.UserRepository
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-private const val URL_USERS = "https://jsonplaceholder.typicode.com/users"
-private const val URL_POSTS = "https://jsonplaceholder.typicode.com/posts"
-private const val URL_COMMENTS = "https://jsonplaceholder.typicode.com/comments"
-private const val URL_ALBUMS = "https://jsonplaceholder.typicode.com/albums"
-private const val URL_PHOTOS = "https://jsonplaceholder.typicode.com/photos"
-
-class UsersRepositoryImpl : UsersRepository {
-    private var client: OkHttpClient = OkHttpClient()
+class UsersRepositoryImpl : UserRepository {
 
     override fun receiveUsers(callback: (List<UsersItem>) -> Unit) {
-        val request = Request.Builder()
-            .url(URL_USERS)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
+        api.getUsers().enqueue(object : Callback<List<UsersItem>> {
+            override fun onResponse(
+                call: Call<List<UsersItem>>,
+                response: Response<List<UsersItem>>
+            ) {
+                if (response.isSuccessful) {
+                    callback(response.body()!!)
+                }
             }
 
-            override fun onResponse(call: Call, response: Response) {
-                if (response.isSuccessful) {
-                    val body = response.body?.string()
-                    val gson = GsonBuilder().create()
-                    val result = gson.fromJson(body, Array<UsersItem>::class.java).toList()
-                    callback(result)
-                }
+            override fun onFailure(call: Call<List<UsersItem>>, t: Throwable) {
+
             }
         })
     }
 
     override fun receivePosts(callback: (List<UserPostItem>) -> Unit) {
-        val request = Request.Builder()
-            .url(URL_POSTS)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
+        api.getPosts().enqueue(object : Callback<List<UserPostItem>> {
+            override fun onResponse(
+                call: Call<List<UserPostItem>>,
+                response: Response<List<UserPostItem>>
+            ) {
+                if (response.isSuccessful) {
+                    callback(response.body()!!)
+                }
             }
 
-            override fun onResponse(call: Call, response: Response) {
-                if (response.isSuccessful) {
-                    val body = response.body?.string()
-                    val gson = GsonBuilder().create()
-                    val result = gson.fromJson(body, Array<UserPostItem>::class.java).toList()
-                    callback(result)
-                }
+            override fun onFailure(call: Call<List<UserPostItem>>, t: Throwable) {
+
             }
         })
     }
 
     override fun receiveComments(callback: (List<Comment>) -> Unit) {
-        val request = Request.Builder()
-            .url(URL_COMMENTS)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
+        api.getComments().enqueue(object : Callback<List<Comment>> {
+            override fun onResponse(
+                call: Call<List<Comment>>,
+                response: Response<List<Comment>>
+            ) {
+                if (response.isSuccessful) {
+                    callback(response.body()!!)
+                }
             }
 
-            override fun onResponse(call: Call, response: Response) {
-                if (response.isSuccessful) {
-                    val body = response.body?.string()
-                    val gson = GsonBuilder().create()
-                    val result = gson.fromJson(body, Array<Comment>::class.java).toList()
-                    callback(result)
-                }
+            override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
+
             }
         })
     }
 
     override fun receiveAlbums(callback: (List<Album>) -> Unit) {
-        val request = Request.Builder()
-            .url(URL_ALBUMS)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
+        api.getAlbums().enqueue(object : Callback<List<Album>> {
+            override fun onResponse(
+                call: Call<List<Album>>,
+                response: Response<List<Album>>
+            ) {
+                if (response.isSuccessful) {
+                    callback(response.body()!!)
+                }
             }
 
-            override fun onResponse(call: Call, response: Response) {
-                if (response.isSuccessful) {
-                    val body = response.body?.string()
-                    val gson = GsonBuilder().create()
-                    val result = gson.fromJson(body, Array<Album>::class.java).toList()
-                    callback(result)
-                }
+            override fun onFailure(call: Call<List<Album>>, t: Throwable) {
+
             }
         })
     }
 
     override fun receivePhotos(callback: (List<Photo>) -> Unit) {
-        val request = Request.Builder()
-            .url(URL_PHOTOS)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
+        api.getPhotos().enqueue(object : Callback<List<Photo>> {
+            override fun onResponse(
+                call: Call<List<Photo>>,
+                response: Response<List<Photo>>
+            ) {
+                if (response.isSuccessful) {
+                    callback(response.body()!!)
+                }
             }
 
-            override fun onResponse(call: Call, response: Response) {
-                if (response.isSuccessful) {
-                    val body = response.body?.string()
-                    val gson = GsonBuilder().create()
-                    val result = gson.fromJson(body, Array<Photo>::class.java).toList()
-                    callback(result)
-                }
+            override fun onFailure(call: Call<List<Photo>>, t: Throwable) {
+
             }
         })
     }
