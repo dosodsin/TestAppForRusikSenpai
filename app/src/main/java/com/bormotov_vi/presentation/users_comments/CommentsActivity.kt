@@ -2,9 +2,9 @@ package com.bormotov_vi.presentation.users_comments
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.bormotov_vi.RusikSunpaiApplication
 import com.bormotov_vi.databinding.ActivityCommentsBinding
-import com.bormotov_vi.domain.user_interactor.UsersInteractor
-import com.bormotov_vi.domain.user_interactor.UsersInteractorImpl
+import com.bormotov_vi.domain.retrofit.Repository
 import com.bormotov_vi.presentation.users_comments.recycler.CommentAdapter
 
 class CommentsActivity : AppCompatActivity() {
@@ -12,7 +12,8 @@ class CommentsActivity : AppCompatActivity() {
     private var binding: ActivityCommentsBinding? = null
     private var adapter: CommentAdapter? = null
     private var postId: Int? = null
-    private val interactor: UsersInteractor = UsersInteractorImpl()
+    private val repository: Repository
+        get() = (applicationContext as RusikSunpaiApplication).repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +23,7 @@ class CommentsActivity : AppCompatActivity() {
         val arguments = intent.extras
         postId = arguments?.getInt("postId")
 
-        interactor.receiveComments {
+        repository.getComments {
             runOnUiThread {
                 adapter = CommentAdapter(it)
                 binding?.commentsRecyclerView?.adapter = adapter

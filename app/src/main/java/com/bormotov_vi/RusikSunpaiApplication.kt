@@ -1,11 +1,11 @@
 package com.bormotov_vi
 
 import android.app.Application
+import com.bormotov_vi.domain.retrofit.Repository
+
 
 class RusikSunpaiApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
 
-        // проверить что работает и проинициализировать ретрофит
-    }
+    val repository = Repository()
+
 }
