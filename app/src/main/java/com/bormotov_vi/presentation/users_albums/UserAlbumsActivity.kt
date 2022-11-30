@@ -35,7 +35,7 @@ class UserAlbumsActivity : AppCompatActivity() {
             }
         }
 
-        binding?.toolbar?.albumsToolbarImageView?.setOnClickListener {
+        binding?.toolbar?.backImage?.setOnClickListener {
             onBackPressed()
         }
     }

@@ -18,22 +18,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- try to use Barrier-->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/itemPostBarrier"
+            android:layout_marginTop="8dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="titleTextView,postTitleTextView" />
 
-        <TextView
-            android:id="@+id/bodyTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/postItemBody"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/postBodyTextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+        <Space
+            android:id="@+id/itemPostSpace"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            app:layout_constraintStart_toEndOf="@id/itemPostBarrier" />
 
         <TextView
             android:id="@+id/titleTextView"
@@ -49,18 +46,32 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/bodyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/postItemBody"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/postBodyTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+
+        <TextView
             android:id="@+id/postTitleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
             android:layout_marginTop="8dp"
             android:ellipsize="end"
-            app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="asdfkjoashdfkl;asjhdflaas;dlfkas;ldfkjal;skdjf;lasjf;lasdkjfksjhdfkalsjhdflaksjdhf;askljdhflaksjhdflkasjdhflkasjdhfasjhdflaksjhdfkalsjhdflaksjdhf;askljdhflaksjhdflkasjdhflkasjdhfasjhdflaksjhdfkalsjhdflaksjdhf;askljdhflaksjhdflkasjdhflkasjdhf" />
+            tools:text="Title" />
 
         <TextView
             android:id="@+id/postBodyTextView"
@@ -69,11 +80,9 @@
             android:layout_marginStart="80dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:ellipsize="end"
-            android:lines="1"
             android:textColor="@color/black"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/postTitleTextView"
             tools:text="Body" />

@@ -29,7 +29,7 @@ class CommentsActivity : AppCompatActivity() {
             }
         }
 
-        binding?.toolbar?.albumsToolbarImageView?.setOnClickListener {
+        binding?.toolbar?.backImage?.setOnClickListener {
             super.onBackPressed()
         }
     }
