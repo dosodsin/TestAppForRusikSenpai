@@ -15,21 +15,6 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.TestAppForRusikSenpai">
         <activity
-            android:name=".presentation.users_photos.UserPhotosActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.users_albums.UserAlbumsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.users_comments.CommentsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.users_posts.UserPostsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.users_posts_and_albums.UsersPostsAndAlbumsActivity"
-            android:exported="false" />
-        <activity
             android:name=".presentation.users_screen.UsersActivity"
             android:exported="true">
             <intent-filter>
