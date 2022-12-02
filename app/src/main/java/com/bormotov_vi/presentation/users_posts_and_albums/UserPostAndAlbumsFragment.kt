@@ -9,6 +9,7 @@ import com.bormotov_vi.R
 import com.bormotov_vi.databinding.FragmentUserPostAndAlbumsBinding
 import com.bormotov_vi.presentation.users_albums.UserAlbumsFragment
 import com.bormotov_vi.presentation.users_posts.UserPostsFragment
+import com.bormotov_vi.presentation.users_screen.MainFragment
 
 
 class UserPostAndAlbumsFragment : Fragment() {
@@ -24,24 +25,33 @@ class UserPostAndAlbumsFragment : Fragment() {
         binding = FragmentUserPostAndAlbumsBinding.inflate(inflater, container, false)
         val postsButton = binding?.postButton
         val albumsButton = binding?.albumButton
+        val imageBack = binding?.toolbar?.backImage
 
         postsButton?.setOnClickListener {
             parentFragmentManager
                 .beginTransaction()
-                .addToBackStack(null)
                 .replace(R.id.activityMain, userPostFragment)
                 .commit()
         }
         albumsButton?.setOnClickListener {
             parentFragmentManager
                 .beginTransaction()
-                .addToBackStack(null)
                 .replace(R.id.activityMain, userAlbumFragment)
                 .commit()
         }
+        imageBack?.setOnClickListener {
+            parentFragmentManager
+                .beginTransaction()
+                .replace(R.id.activityMain, MainFragment.newInstance())
+                .addToBackStack("mainFragment")
+                .commit()
+        }
+
 
         return binding?.root
     }
+
+
 
     companion object {
 

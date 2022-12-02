@@ -11,6 +11,8 @@ import com.bormotov_vi.databinding.FragmentUserAlbumsBinding
 import com.bormotov_vi.domain.user_interactor.UsersInteractor
 import com.bormotov_vi.presentation.users_albums.recycler.AlbumsAdapter
 import com.bormotov_vi.presentation.users_photos.UserPhotosFragment
+import com.bormotov_vi.presentation.users_posts_and_albums.UserPostAndAlbumsFragment
+import com.bormotov_vi.presentation.users_screen.MainFragment
 
 
 class UserAlbumsFragment : Fragment() {
@@ -25,7 +27,7 @@ class UserAlbumsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentUserAlbumsBinding.inflate(layoutInflater, container, false)
-
+        val imageBack = binding?.toolbar?.backImage
         interactor.receiveAlbums {
             adapter = AlbumsAdapter(it) {
                 parentFragmentManager
@@ -35,6 +37,14 @@ class UserAlbumsFragment : Fragment() {
             }
             binding?.recyclerViewPost?.adapter = adapter
 
+        }
+
+        imageBack?.setOnClickListener {
+            parentFragmentManager
+                .beginTransaction()
+                .replace(R.id.activityMain, UserPostAndAlbumsFragment.newInstance())
+                .addToBackStack("usersPostsAndAlbumsFragment")
+                .commit()
         }
 
         return binding?.root
