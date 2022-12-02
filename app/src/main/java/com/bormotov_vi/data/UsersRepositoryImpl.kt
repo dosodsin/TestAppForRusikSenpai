@@ -30,14 +30,20 @@ class UsersRepositoryImpl : UserRepository {
         })
     }
 
-    override fun receivePosts(callback: (List<UserPostItem>) -> Unit) {
+    override fun receivePosts(userId: Int, callback: (List<UserPostItem>) -> Unit) {
         api.getPosts().enqueue(object : Callback<List<UserPostItem>> {
             override fun onResponse(
                 call: Call<List<UserPostItem>>,
                 response: Response<List<UserPostItem>>
             ) {
                 if (response.isSuccessful) {
-                    callback(response.body()!!)
+                    val body=response.body()
+                    body?.filter {
+                        it.userId == userId
+                    }
+                    if (body != null) {
+                        callback(body)
+                    }
                 }
             }
 

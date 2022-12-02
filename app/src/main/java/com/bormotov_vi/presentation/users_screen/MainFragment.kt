@@ -18,7 +18,8 @@ class MainFragment : Fragment() {
     private var binding: FragmentMainBinding? = null
     private var adapter: UserAdapter? = null
     private val interactor: UsersInteractor = RusikSenpaiApplication.interactor
-    private val usersPostsAndAlbumsFragment = UserPostAndAlbumsFragment.newInstance()
+    private var usersPostsAndAlbumsFragment : UserPostAndAlbumsFragment?=null
+    private var bundle = Bundle()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,12 +29,15 @@ class MainFragment : Fragment() {
 
         interactor.receiveUsers {
             adapter = UserAdapter(it) {
+                bundle.putInt("userId", it.id)
+                usersPostsAndAlbumsFragment= UserPostAndAlbumsFragment.newInstance()
+                usersPostsAndAlbumsFragment?.arguments = bundle
                 parentFragmentManager
                     .beginTransaction()
-                    .replace(R.id.activityMain, usersPostsAndAlbumsFragment)
+                    .replace(R.id.activityMain, usersPostsAndAlbumsFragment!!)
                     .commit()
             }
-            binding?.mainFragmentRecyclerView?.adapter=adapter
+            binding?.mainFragmentRecyclerView?.adapter = adapter
         }
         return binding?.root
     }

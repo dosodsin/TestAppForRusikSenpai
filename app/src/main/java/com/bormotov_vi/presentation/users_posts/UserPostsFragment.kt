@@ -19,6 +19,7 @@ class UserPostsFragment : Fragment() {
     private var adapter: PostAdapter? = null
     private val interactor: UsersInteractor = RusikSenpaiApplication.interactor
     private val userCommentsFragment = UserCommentsFragment.newInstance()
+    private var bundle = Bundle()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +27,7 @@ class UserPostsFragment : Fragment() {
     ): View? {
         binding = FragmentUserPostsBinding.inflate(layoutInflater, container, false)
         val imageBack = binding?.toolbar?.backImage
-        interactor.receivePosts {
+        interactor.receivePosts(bundle.getInt("userId")) {
             adapter = PostAdapter(it) {
                 parentFragmentManager
                     .beginTransaction()

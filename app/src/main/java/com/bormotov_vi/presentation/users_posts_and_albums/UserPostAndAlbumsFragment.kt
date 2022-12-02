@@ -17,6 +17,7 @@ class UserPostAndAlbumsFragment : Fragment() {
     private var binding: FragmentUserPostAndAlbumsBinding? = null
     private val userPostFragment = UserPostsFragment.newInstance()
     private val userAlbumFragment = UserAlbumsFragment.newInstance()
+    private var bundle = this.arguments
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,8 +27,10 @@ class UserPostAndAlbumsFragment : Fragment() {
         val postsButton = binding?.postButton
         val albumsButton = binding?.albumButton
         val imageBack = binding?.toolbar?.backImage
+        val test=bundle?.getInt("userId")
 
         postsButton?.setOnClickListener {
+            userPostFragment.arguments = bundle
             parentFragmentManager
                 .beginTransaction()
                 .replace(R.id.activityMain, userPostFragment)
@@ -50,7 +53,6 @@ class UserPostAndAlbumsFragment : Fragment() {
 
         return binding?.root
     }
-
 
 
     companion object {

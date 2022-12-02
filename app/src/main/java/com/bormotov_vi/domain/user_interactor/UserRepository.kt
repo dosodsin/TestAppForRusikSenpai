@@ -8,7 +8,7 @@ import com.bormotov_vi.domain.model.user.UsersItem
 
 interface UserRepository {
     fun receiveUsers(callback: (List<UsersItem>) -> Unit)
-    fun receivePosts(callback: (List<UserPostItem>) -> Unit)
+    fun receivePosts(userId:Int, callback: (List<UserPostItem>) -> Unit)
     fun receiveComments(callback: (List<Comment>) -> Unit)
     fun receiveAlbums(callback: (List<Album>) -> Unit)
     fun receivePhotos(callback: (List<Photo>) -> Unit)

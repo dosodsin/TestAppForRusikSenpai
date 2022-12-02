@@ -13,8 +13,8 @@ class UsersInteractorImpl(
     override fun receiveUsers(callback: (List<UsersItem>) -> Unit) =
         repository.receiveUsers(callback)
 
-    override fun receivePosts(callback: (List<UserPostItem>) -> Unit) =
-        repository.receivePosts(callback)
+    override fun receivePosts(userId: Int, callback: (List<UserPostItem>) -> Unit) =
+        repository.receivePosts(userId, callback)
 
     override fun receiveComments(callback: (List<Comment>) -> Unit) =
         repository.receiveComments(callback)
