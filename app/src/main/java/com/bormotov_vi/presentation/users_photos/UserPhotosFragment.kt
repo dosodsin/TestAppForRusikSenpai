@@ -9,11 +9,11 @@ import com.bormotov_vi.R
 import com.bormotov_vi.RusikSenpaiApplication
 import com.bormotov_vi.databinding.FragmentUserPhotosBinding
 import com.bormotov_vi.domain.user_interactor.UsersInteractor
+import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_albums.UserAlbumsFragment
 import com.bormotov_vi.presentation.users_photos.recycler.PhotoAdapter
-import com.bormotov_vi.presentation.users_posts_and_albums.UserPostAndAlbumsFragment
 
-class UserPhotosFragment : Fragment() {
+class UserPhotosFragment : BaseFragment() {
 
     private var binding: FragmentUserPhotosBinding? = null
     private val interactor: UsersInteractor = RusikSenpaiApplication.interactor
@@ -25,17 +25,14 @@ class UserPhotosFragment : Fragment() {
     ): View? {
         binding = FragmentUserPhotosBinding.inflate(layoutInflater, container, false)
         val imageBack = binding?.toolbar?.backImage
-        interactor.receivePhotos {
+        val bundle = this.arguments
+        interactor.receivePhotos(bundle?.getInt("albumId")) {
             adapter = PhotoAdapter(it)
             binding!!.photoRecyclerView.adapter = adapter
         }
 
         imageBack?.setOnClickListener {
-            parentFragmentManager
-                .beginTransaction()
-                .replace(R.id.activityMain, UserAlbumsFragment.newInstance())
-                .addToBackStack("userAlbumsFragment")
-                .commit()
+            parentFragmentManager.popBackStack()
         }
 
         return binding?.root

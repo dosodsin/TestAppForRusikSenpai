@@ -17,6 +17,7 @@ class UsersActivity : AppCompatActivity() {
         supportFragmentManager
             .beginTransaction()
             .add(R.id.activityMain, mainFragment)
+            .addToBackStack("mainFragment")
             .commit()
 
     }

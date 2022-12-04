@@ -9,17 +9,16 @@ import com.bormotov_vi.R
 import com.bormotov_vi.RusikSenpaiApplication
 import com.bormotov_vi.databinding.FragmentUserPostsBinding
 import com.bormotov_vi.domain.user_interactor.UsersInteractor
+import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_comments.UserCommentsFragment
 import com.bormotov_vi.presentation.users_posts.recycler.PostAdapter
 import com.bormotov_vi.presentation.users_posts_and_albums.UserPostAndAlbumsFragment
 
-class UserPostsFragment : Fragment() {
+class UserPostsFragment : BaseFragment() {
 
     private var binding: FragmentUserPostsBinding? = null
     private var adapter: PostAdapter? = null
     private val interactor: UsersInteractor = RusikSenpaiApplication.interactor
-    private val userCommentsFragment = UserCommentsFragment.newInstance()
-    private var bundle = Bundle()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,11 +26,16 @@ class UserPostsFragment : Fragment() {
     ): View? {
         binding = FragmentUserPostsBinding.inflate(layoutInflater, container, false)
         val imageBack = binding?.toolbar?.backImage
-        interactor.receivePosts(bundle.getInt("userId")) {
+        val bundle = this.arguments
+        interactor.receivePosts(bundle?.getInt("userId")) {
             adapter = PostAdapter(it) {
+                bundle?.putInt("postId", it.id)
+                val userCommentsFragment = UserCommentsFragment.newInstance()
+                userCommentsFragment.arguments = bundle
                 parentFragmentManager
                     .beginTransaction()
                     .replace(R.id.activityMain, userCommentsFragment)
+                    .addToBackStack("userCommentsFragment")
                     .commit()
             }
             binding?.recyclerViewPost?.adapter = adapter
@@ -39,11 +43,7 @@ class UserPostsFragment : Fragment() {
         }
 
         imageBack?.setOnClickListener {
-            parentFragmentManager
-                .beginTransaction()
-                .replace(R.id.activityMain, UserPostAndAlbumsFragment.newInstance())
-                .addToBackStack("usersPostsAndAlbumsFragment")
-                .commit()
+            parentFragmentManager.popBackStack()
         }
 
         return binding?.root

@@ -30,15 +30,15 @@ class UsersRepositoryImpl : UserRepository {
         })
     }
 
-    override fun receivePosts(userId: Int, callback: (List<UserPostItem>) -> Unit) {
+    override fun receivePosts(userId: Int?, callback: (List<UserPostItem>) -> Unit) {
         api.getPosts().enqueue(object : Callback<List<UserPostItem>> {
             override fun onResponse(
                 call: Call<List<UserPostItem>>,
                 response: Response<List<UserPostItem>>
             ) {
                 if (response.isSuccessful) {
-                    val body=response.body()
-                    body?.filter {
+                    var body = response.body()
+                    body = body?.filter {
                         it.userId == userId
                     }
                     if (body != null) {
@@ -53,14 +53,20 @@ class UsersRepositoryImpl : UserRepository {
         })
     }
 
-    override fun receiveComments(callback: (List<Comment>) -> Unit) {
+    override fun receiveComments(postId: Int?, callback: (List<Comment>) -> Unit) {
         api.getComments().enqueue(object : Callback<List<Comment>> {
             override fun onResponse(
                 call: Call<List<Comment>>,
                 response: Response<List<Comment>>
             ) {
                 if (response.isSuccessful) {
-                    callback(response.body()!!)
+                    var body = response.body()
+                    body = body?.filter {
+                        it.postId == postId
+                    }
+                    if (body != null) {
+                        callback(body)
+                    }
                 }
             }
 
@@ -70,14 +76,20 @@ class UsersRepositoryImpl : UserRepository {
         })
     }
 
-    override fun receiveAlbums(callback: (List<Album>) -> Unit) {
+    override fun receiveAlbums(userId: Int?, callback: (List<Album>) -> Unit) {
         api.getAlbums().enqueue(object : Callback<List<Album>> {
             override fun onResponse(
                 call: Call<List<Album>>,
                 response: Response<List<Album>>
             ) {
                 if (response.isSuccessful) {
-                    callback(response.body()!!)
+                    var body = response.body()
+                    body = body?.filter {
+                        it.userId == userId
+                    }
+                    if (body != null) {
+                        callback(body)
+                    }
                 }
             }
 
@@ -87,14 +99,20 @@ class UsersRepositoryImpl : UserRepository {
         })
     }
 
-    override fun receivePhotos(callback: (List<Photo>) -> Unit) {
+    override fun receivePhotos(albumId: Int?, callback: (List<Photo>) -> Unit) {
         api.getPhotos().enqueue(object : Callback<List<Photo>> {
             override fun onResponse(
                 call: Call<List<Photo>>,
                 response: Response<List<Photo>>
             ) {
                 if (response.isSuccessful) {
-                    callback(response.body()!!)
+                    var body = response.body()
+                    body = body?.filter {
+                        it.albumId == albumId
+                    }
+                    if (body != null) {
+                        callback(body)
+                    }
                 }
             }
 

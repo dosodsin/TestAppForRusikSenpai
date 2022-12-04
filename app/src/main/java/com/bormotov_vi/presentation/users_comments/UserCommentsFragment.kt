@@ -9,12 +9,12 @@ import com.bormotov_vi.R
 import com.bormotov_vi.RusikSenpaiApplication
 import com.bormotov_vi.databinding.FragmentUserCommentsBinding
 import com.bormotov_vi.domain.user_interactor.UsersInteractor
+import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_comments.recycler.CommentAdapter
 import com.bormotov_vi.presentation.users_posts.UserPostsFragment
-import com.bormotov_vi.presentation.users_posts_and_albums.UserPostAndAlbumsFragment
 
 
-class UserCommentsFragment : Fragment() {
+class UserCommentsFragment : BaseFragment() {
 
     private var binding: FragmentUserCommentsBinding? = null
     private var adapter: CommentAdapter? = null
@@ -26,17 +26,14 @@ class UserCommentsFragment : Fragment() {
     ): View? {
         binding = FragmentUserCommentsBinding.inflate(inflater, container, false)
         val imageBack = binding?.toolbar?.backImage
-        interactor.receiveComments {
+        val bundle = this.arguments
+        interactor.receiveComments(bundle?.getInt("postId")) {
             adapter = CommentAdapter(it)
             binding?.commentsRecyclerView?.adapter = adapter
         }
 
         imageBack?.setOnClickListener {
-            parentFragmentManager
-                .beginTransaction()
-                .replace(R.id.activityMain, UserPostsFragment.newInstance())
-                .addToBackStack("UserPostsFragment")
-                .commit()
+            parentFragmentManager.popBackStack()
         }
 
         return binding?.root

@@ -7,17 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bormotov_vi.R
 import com.bormotov_vi.databinding.FragmentUserPostAndAlbumsBinding
+import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_albums.UserAlbumsFragment
 import com.bormotov_vi.presentation.users_posts.UserPostsFragment
-import com.bormotov_vi.presentation.users_screen.MainFragment
 
 
-class UserPostAndAlbumsFragment : Fragment() {
+class UserPostAndAlbumsFragment : BaseFragment() {
 
     private var binding: FragmentUserPostAndAlbumsBinding? = null
-    private val userPostFragment = UserPostsFragment.newInstance()
-    private val userAlbumFragment = UserAlbumsFragment.newInstance()
-    private var bundle = this.arguments
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,27 +24,28 @@ class UserPostAndAlbumsFragment : Fragment() {
         val postsButton = binding?.postButton
         val albumsButton = binding?.albumButton
         val imageBack = binding?.toolbar?.backImage
-        val test=bundle?.getInt("userId")
+        var bundle = this.arguments
 
         postsButton?.setOnClickListener {
+            val userPostFragment = UserPostsFragment.newInstance()
             userPostFragment.arguments = bundle
             parentFragmentManager
                 .beginTransaction()
                 .replace(R.id.activityMain, userPostFragment)
+                .addToBackStack("userPostFragment")
                 .commit()
         }
         albumsButton?.setOnClickListener {
+            val userAlbumFragment = UserAlbumsFragment.newInstance()
+            userAlbumFragment.arguments = bundle
             parentFragmentManager
                 .beginTransaction()
                 .replace(R.id.activityMain, userAlbumFragment)
+                .addToBackStack("userAlbumFragment")
                 .commit()
         }
         imageBack?.setOnClickListener {
-            parentFragmentManager
-                .beginTransaction()
-                .replace(R.id.activityMain, MainFragment.newInstance())
-                .addToBackStack("mainFragment")
-                .commit()
+            parentFragmentManager.popBackStack()
         }
 
 

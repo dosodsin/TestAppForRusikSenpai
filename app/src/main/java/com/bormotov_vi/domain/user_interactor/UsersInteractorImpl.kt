@@ -13,15 +13,15 @@ class UsersInteractorImpl(
     override fun receiveUsers(callback: (List<UsersItem>) -> Unit) =
         repository.receiveUsers(callback)
 
-    override fun receivePosts(userId: Int, callback: (List<UserPostItem>) -> Unit) =
+    override fun receivePosts(userId: Int?, callback: (List<UserPostItem>) -> Unit) =
         repository.receivePosts(userId, callback)
 
-    override fun receiveComments(callback: (List<Comment>) -> Unit) =
-        repository.receiveComments(callback)
+    override fun receiveComments(postId: Int?, callback: (List<Comment>) -> Unit) =
+        repository.receiveComments(postId, callback)
 
-    override fun receiveAlbums(callback: (List<Album>) -> Unit) =
-        repository.receiveAlbums(callback)
+    override fun receiveAlbums(userId: Int?, callback: (List<Album>) -> Unit) =
+        repository.receiveAlbums(userId, callback)
 
-    override fun receivePhotos(callback: (List<Photo>) -> Unit) =
-        repository.receivePhotos(callback)
+    override fun receivePhotos(albumId: Int?, callback: (List<Photo>) -> Unit) =
+        repository.receivePhotos(albumId, callback)
 }
