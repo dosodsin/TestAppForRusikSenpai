@@ -4,16 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bormotov_vi.RusikSenpaiApplication
+import androidx.lifecycle.ViewModelProvider
 import com.bormotov_vi.databinding.FragmentUserPhotosBinding
-import com.bormotov_vi.domain.user_interactor.UsersInteractor
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_photos.recycler.PhotoAdapter
+import com.bormotov_vi.presentation.users_photos.viewModel.UserPhotosViewModel
 
 class UserPhotosFragment : BaseFragment() {
 
     private var binding: FragmentUserPhotosBinding? = null
-    private val interactor: UsersInteractor = RusikSenpaiApplication.interactor
     private var adapter: PhotoAdapter? = null
 
     override fun onCreateView(
@@ -22,7 +21,9 @@ class UserPhotosFragment : BaseFragment() {
     ): View? {
         binding = FragmentUserPhotosBinding.inflate(layoutInflater, container, false)
         val imageBack = binding?.toolbar?.backImage
-        interactor.receivePhotos(this.arguments?.getInt(ALBUM_ID)) { photoItems ->
+        val viewModel = ViewModelProvider(this).get(UserPhotosViewModel::class.java)
+        this.arguments?.getInt(ALBUM_ID)?.let { viewModel.init(it) }
+        viewModel.photos.observe(viewLifecycleOwner) { photoItems ->
             adapter = PhotoAdapter(photoItems)
             binding?.photoRecyclerView?.adapter = adapter
         }

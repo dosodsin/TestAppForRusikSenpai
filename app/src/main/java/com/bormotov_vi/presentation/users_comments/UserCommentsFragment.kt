@@ -4,18 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bormotov_vi.RusikSenpaiApplication
+import androidx.lifecycle.ViewModelProvider
 import com.bormotov_vi.databinding.FragmentUserCommentsBinding
-import com.bormotov_vi.domain.user_interactor.UsersInteractor
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_comments.recycler.CommentAdapter
+import com.bormotov_vi.presentation.users_comments.viewModel.UserCommentsViewModel
 
 
 class UserCommentsFragment : BaseFragment() {
 
     private var binding: FragmentUserCommentsBinding? = null
     private var adapter: CommentAdapter? = null
-    private val interactor: UsersInteractor = RusikSenpaiApplication.interactor
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,7 +23,9 @@ class UserCommentsFragment : BaseFragment() {
         binding = FragmentUserCommentsBinding.inflate(inflater, container, false)
         val imageBack = binding?.toolbar?.backImage
         val bundle = this.arguments
-        interactor.receiveComments(bundle?.getInt(POST_ID)) { commentItems ->
+        val viewModel = ViewModelProvider(this).get(UserCommentsViewModel::class.java)
+        bundle?.getInt(POST_ID)?.let { viewModel.init(it) }
+        viewModel.comments.observe(viewLifecycleOwner) { commentItems ->
             adapter = CommentAdapter(commentItems)
             binding?.commentsRecyclerView?.adapter = adapter
         }

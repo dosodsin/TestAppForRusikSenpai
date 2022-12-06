@@ -4,19 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bormotov_vi.RusikSenpaiApplication
+import androidx.lifecycle.ViewModelProvider
 import com.bormotov_vi.databinding.FragmentMainBinding
-import com.bormotov_vi.domain.user_interactor.UsersInteractor
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_posts_and_albums.UserPostAndAlbumsFragment
 import com.bormotov_vi.presentation.users_screen.recycler.UserAdapter
+import com.bormotov_vi.presentation.users_screen.viewModel.UserItemsViewModel
 
 
 class MainFragment : BaseFragment() {
 
     private var binding: FragmentMainBinding? = null
     private var adapter: UserAdapter? = null
-    private val interactor: UsersInteractor = RusikSenpaiApplication.interactor
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,11 +23,13 @@ class MainFragment : BaseFragment() {
     ): View? {
         binding = FragmentMainBinding.inflate(inflater, container, false)
         val bundle = Bundle()
-        interactor.receiveUsers { userItems ->
+        val viewModel = ViewModelProvider(this).get(UserItemsViewModel::class.java)
+        viewModel.init()
+        viewModel.users.observe(viewLifecycleOwner) { userItems ->
             adapter = UserAdapter(userItems) { userItem ->
-                bundle?.putInt(USER_ID, userItem.id)
+                bundle.putInt(USER_ID, userItem.id)
                 val usersPostsAndAlbumsFragment = UserPostAndAlbumsFragment()
-                usersPostsAndAlbumsFragment?.arguments = bundle
+                usersPostsAndAlbumsFragment.arguments = bundle
                 navigate(POSTS_ALBUMS_FRAGMENT_TAG, usersPostsAndAlbumsFragment)
             }
             binding?.mainFragmentRecyclerView?.adapter = adapter

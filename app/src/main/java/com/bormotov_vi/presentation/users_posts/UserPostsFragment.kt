@@ -4,18 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bormotov_vi.RusikSenpaiApplication
+import androidx.lifecycle.ViewModelProvider
 import com.bormotov_vi.databinding.FragmentUserPostsBinding
-import com.bormotov_vi.domain.user_interactor.UsersInteractor
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_comments.UserCommentsFragment
 import com.bormotov_vi.presentation.users_posts.recycler.PostAdapter
+import com.bormotov_vi.presentation.users_posts.viewModel.PostItemViewModel
 
 class UserPostsFragment : BaseFragment() {
 
     private var binding: FragmentUserPostsBinding? = null
     private var adapter: PostAdapter? = null
-    private val interactor: UsersInteractor = RusikSenpaiApplication.interactor
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,7 +22,9 @@ class UserPostsFragment : BaseFragment() {
     ): View? {
         binding = FragmentUserPostsBinding.inflate(layoutInflater, container, false)
         val imageBack = binding?.toolbar?.backImage
-        interactor.receivePosts(this.arguments?.getInt(USER_ID)) { postItems ->
+        val viewModel = ViewModelProvider(this).get(PostItemViewModel::class.java)
+        this.arguments?.getInt(USER_ID)?.let { viewModel.init(it) }
+        viewModel.posts.observe(viewLifecycleOwner) { postItems ->
             adapter = PostAdapter(postItems) { postItem ->
                 this.arguments?.putInt(POST_ID, postItem.id)
                 val userCommentsFragment = UserCommentsFragment()
@@ -31,7 +32,6 @@ class UserPostsFragment : BaseFragment() {
                 navigate(POST_FRAGMENT_TAG, userCommentsFragment)
             }
             binding?.recyclerViewPost?.adapter = adapter
-
         }
 
         imageBack?.setOnClickListener {
