@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.bormotov_vi.R
 import com.bormotov_vi.databinding.FragmentUserPostAndAlbumsBinding
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_albums.UserAlbumsFragment
@@ -21,33 +19,24 @@ class UserPostAndAlbumsFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentUserPostAndAlbumsBinding.inflate(inflater, container, false)
-        val postsButton = binding?.postButton
-        val albumsButton = binding?.albumButton
-        val imageBack = binding?.toolbar?.backImage
-        var bundle = this.arguments
+        val bundle = this.arguments
+        val postButton = binding?.postButton
+        val albumButton = binding?.albumButton
+        val backImage = binding?.toolbar?.backImage
 
-        postsButton?.setOnClickListener {
-            val userPostFragment = UserPostsFragment.newInstance()
+        postButton?.setOnClickListener {
+            val userPostFragment = UserPostsFragment()
             userPostFragment.arguments = bundle
-            parentFragmentManager
-                .beginTransaction()
-                .replace(R.id.activityMain, userPostFragment)
-                .addToBackStack("userPostFragment")
-                .commit()
+            navigate(POST_FRAGMENT_TAG, userPostFragment)
         }
-        albumsButton?.setOnClickListener {
-            val userAlbumFragment = UserAlbumsFragment.newInstance()
+        albumButton?.setOnClickListener {
+            val userAlbumFragment = UserAlbumsFragment()
             userAlbumFragment.arguments = bundle
-            parentFragmentManager
-                .beginTransaction()
-                .replace(R.id.activityMain, userAlbumFragment)
-                .addToBackStack("userAlbumFragment")
-                .commit()
+            navigate(ALBUM_FRAGMENT_TAG, userAlbumFragment)
         }
-        imageBack?.setOnClickListener {
-            parentFragmentManager.popBackStack()
+        backImage?.setOnClickListener {
+            moveToPrevFragmentByToolbarBackImage()
         }
-
 
         return binding?.root
     }
@@ -55,7 +44,8 @@ class UserPostAndAlbumsFragment : BaseFragment() {
 
     companion object {
 
-        @JvmStatic
-        fun newInstance() = UserPostAndAlbumsFragment()
+        const val POST_FRAGMENT_TAG = "userPostFragment"
+        const val ALBUM_FRAGMENT_TAG = "userAlbumFragment"
+
     }
 }

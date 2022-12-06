@@ -1,21 +1,12 @@
 package com.bormotov_vi.presentation.base_fragment
 
-import android.os.Bundle
 import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bormotov_vi.R
 
 
-open class BaseFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_base, container, false)
-    }
+abstract class BaseFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
@@ -27,7 +18,22 @@ open class BaseFragment : Fragment() {
         }
     }
 
-    private fun onBackPressed():Boolean {
+    protected fun navigate(to: String, fragment: BaseFragment) {
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.activityMain, fragment)
+            .addToBackStack(to)
+            .commit()
+    }
+
+    protected fun moveToPrevFragmentByToolbarBackImage() {
+        val backImage = activity?.findViewById<ImageView>(R.id.backImage)
+        backImage?.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+    }
+
+    private fun onBackPressed(): Boolean {
         activity?.onBackPressed()
         return true
     }

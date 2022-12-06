@@ -8,7 +8,7 @@ import com.bormotov_vi.databinding.ActivityMainBinding
 class UsersActivity : AppCompatActivity() {
 
     private var binding: ActivityMainBinding? = null
-    private val mainFragment = MainFragment.newInstance()
+    private val mainFragment = MainFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,8 +17,12 @@ class UsersActivity : AppCompatActivity() {
         supportFragmentManager
             .beginTransaction()
             .add(R.id.activityMain, mainFragment)
-            .addToBackStack("mainFragment")
+            .addToBackStack(MAIN_FRAGMENT_TAG)
             .commit()
 
+    }
+
+    companion object {
+        const val MAIN_FRAGMENT_TAG = "mainFragment"
     }
 }

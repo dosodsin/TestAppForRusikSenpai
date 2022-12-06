@@ -4,13 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.bormotov_vi.R
 import com.bormotov_vi.RusikSenpaiApplication
 import com.bormotov_vi.databinding.FragmentUserPhotosBinding
 import com.bormotov_vi.domain.user_interactor.UsersInteractor
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
-import com.bormotov_vi.presentation.users_albums.UserAlbumsFragment
 import com.bormotov_vi.presentation.users_photos.recycler.PhotoAdapter
 
 class UserPhotosFragment : BaseFragment() {
@@ -25,21 +22,19 @@ class UserPhotosFragment : BaseFragment() {
     ): View? {
         binding = FragmentUserPhotosBinding.inflate(layoutInflater, container, false)
         val imageBack = binding?.toolbar?.backImage
-        val bundle = this.arguments
-        interactor.receivePhotos(bundle?.getInt("albumId")) {
-            adapter = PhotoAdapter(it)
-            binding!!.photoRecyclerView.adapter = adapter
+        interactor.receivePhotos(this.arguments?.getInt(ALBUM_ID)) { photoItems ->
+            adapter = PhotoAdapter(photoItems)
+            binding?.photoRecyclerView?.adapter = adapter
         }
 
         imageBack?.setOnClickListener {
-            parentFragmentManager.popBackStack()
+            moveToPrevFragmentByToolbarBackImage()
         }
 
         return binding?.root
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance() = UserPhotosFragment()
+        const val ALBUM_ID = "albumId"
     }
 }

@@ -4,14 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.bormotov_vi.R
 import com.bormotov_vi.RusikSenpaiApplication
 import com.bormotov_vi.databinding.FragmentUserCommentsBinding
 import com.bormotov_vi.domain.user_interactor.UsersInteractor
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_comments.recycler.CommentAdapter
-import com.bormotov_vi.presentation.users_posts.UserPostsFragment
 
 
 class UserCommentsFragment : BaseFragment() {
@@ -27,20 +24,19 @@ class UserCommentsFragment : BaseFragment() {
         binding = FragmentUserCommentsBinding.inflate(inflater, container, false)
         val imageBack = binding?.toolbar?.backImage
         val bundle = this.arguments
-        interactor.receiveComments(bundle?.getInt("postId")) {
-            adapter = CommentAdapter(it)
+        interactor.receiveComments(bundle?.getInt(POST_ID)) { commentItems ->
+            adapter = CommentAdapter(commentItems)
             binding?.commentsRecyclerView?.adapter = adapter
         }
 
         imageBack?.setOnClickListener {
-            parentFragmentManager.popBackStack()
+            moveToPrevFragmentByToolbarBackImage()
         }
 
         return binding?.root
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance() = UserCommentsFragment()
+        const val POST_ID = "postId"
     }
 }
