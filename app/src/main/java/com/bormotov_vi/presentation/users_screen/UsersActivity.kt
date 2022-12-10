@@ -8,12 +8,12 @@ import com.bormotov_vi.databinding.ActivityMainBinding
 class UsersActivity : AppCompatActivity() {
 
     private var binding: ActivityMainBinding? = null
-    private val mainFragment = MainFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+        val mainFragment = MainFragment()
         supportFragmentManager
             .beginTransaction()
             .add(R.id.activityMain, mainFragment)

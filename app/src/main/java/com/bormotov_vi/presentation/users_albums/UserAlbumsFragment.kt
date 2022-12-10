@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.bormotov_vi.databinding.FragmentUserAlbumsBinding
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_albums.recycler.AlbumsAdapter
@@ -16,6 +16,7 @@ class UserAlbumsFragment : BaseFragment() {
 
     private var binding: FragmentUserAlbumsBinding? = null
     private var adapter: AlbumsAdapter? = null
+    val viewModel: UserAlbumViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,8 +24,7 @@ class UserAlbumsFragment : BaseFragment() {
     ): View? {
         binding = FragmentUserAlbumsBinding.inflate(layoutInflater, container, false)
         val imageBack = binding?.toolbar?.backImage
-        val viewModel = ViewModelProvider(this).get(UserAlbumViewModel::class.java)
-        this.arguments?.getInt(USER_ID)?.let { viewModel.init(it) }
+        viewModel.userId = this.arguments?.getInt(USER_ID)
         viewModel.albums.observe(viewLifecycleOwner) { albumsItems ->
             val userPhotosFragment = UserPhotosFragment()
             adapter = AlbumsAdapter(albumsItems) { albumItem ->

@@ -8,7 +8,7 @@ import com.bormotov_vi.domain.model.post.UserPostItem
 import com.bormotov_vi.domain.model.user.UsersItem
 
 class UsersInteractorImpl(
-    private val repository: UserRepository = UsersRepositoryImpl()
+    private val repository: UserRepository
 ) : UsersInteractor {
     override fun receiveUsers(callback: (List<UsersItem>) -> Unit) =
         repository.receiveUsers(callback)

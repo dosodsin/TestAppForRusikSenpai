@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.bormotov_vi.databinding.FragmentMainBinding
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_posts_and_albums.UserPostAndAlbumsFragment
@@ -16,6 +16,7 @@ class MainFragment : BaseFragment() {
 
     private var binding: FragmentMainBinding? = null
     private var adapter: UserAdapter? = null
+    val viewModel: UserItemsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,8 +24,6 @@ class MainFragment : BaseFragment() {
     ): View? {
         binding = FragmentMainBinding.inflate(inflater, container, false)
         val bundle = Bundle()
-        val viewModel = ViewModelProvider(this).get(UserItemsViewModel::class.java)
-        viewModel.init()
         viewModel.users.observe(viewLifecycleOwner) { userItems ->
             adapter = UserAdapter(userItems) { userItem ->
                 bundle.putInt(USER_ID, userItem.id)

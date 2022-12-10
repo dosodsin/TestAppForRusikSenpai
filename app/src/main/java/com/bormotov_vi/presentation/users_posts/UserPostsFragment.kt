@@ -4,17 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.bormotov_vi.databinding.FragmentUserPostsBinding
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_comments.UserCommentsFragment
 import com.bormotov_vi.presentation.users_posts.recycler.PostAdapter
 import com.bormotov_vi.presentation.users_posts.viewModel.PostItemViewModel
+import org.koin.core.component.KoinComponent
 
-class UserPostsFragment : BaseFragment() {
+class UserPostsFragment : BaseFragment(), KoinComponent {
 
     private var binding: FragmentUserPostsBinding? = null
     private var adapter: PostAdapter? = null
+    val viewModel: PostItemViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,8 +24,7 @@ class UserPostsFragment : BaseFragment() {
     ): View? {
         binding = FragmentUserPostsBinding.inflate(layoutInflater, container, false)
         val imageBack = binding?.toolbar?.backImage
-        val viewModel = ViewModelProvider(this).get(PostItemViewModel::class.java)
-        this.arguments?.getInt(USER_ID)?.let { viewModel.init(it) }
+        viewModel.userId = this.arguments?.getInt(USER_ID)
         viewModel.posts.observe(viewLifecycleOwner) { postItems ->
             adapter = PostAdapter(postItems) { postItem ->
                 this.arguments?.putInt(POST_ID, postItem.id)
