@@ -4,37 +4,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bormotov_vi.databinding.FragmentUserCommentsBinding
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_comments.recycler.CommentAdapter
 import com.bormotov_vi.presentation.users_comments.viewModel.UserCommentsViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class UserCommentsFragment : BaseFragment() {
 
-    private var binding: FragmentUserCommentsBinding? = null
+    private val binding: FragmentUserCommentsBinding by viewBinding(CreateMethod.INFLATE)
     private var adapter: CommentAdapter? = null
-    val viewModel: UserCommentsViewModel by viewModels()
+    val viewModel: UserCommentsViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentUserCommentsBinding.inflate(inflater, container, false)
-        val imageBack = binding?.toolbar?.backImage
-        val bundle = this.arguments
-        viewModel.postId = this.arguments?.getInt(POST_ID)
+    ): View {
+        this.arguments?.getInt(POST_ID)?.let { viewModel.receiveComments(it) }
         viewModel.comments.observe(viewLifecycleOwner) { commentItems ->
             adapter = CommentAdapter(commentItems)
-            binding?.commentsRecyclerView?.adapter = adapter
+            binding.commentsRecyclerView.adapter = adapter
         }
 
-        imageBack?.setOnClickListener {
-            moveToPrevFragmentByToolbarBackImage()
+        with(binding) {
+            toolbar.backImage.setOnClickListener {
+                moveToPrevFragmentByToolbarBackImage()
+            }
         }
 
-        return binding?.root
+        return binding.root
     }
 
     companion object {

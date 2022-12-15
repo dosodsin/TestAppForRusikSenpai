@@ -1,22 +1,22 @@
 package com.bormotov_vi.presentation.users_albums.viewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bormotov_vi.domain.model.album.Album
 import com.bormotov_vi.domain.user_interactor.UsersInteractor
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class UserAlbumViewModel(private val interactor: UsersInteractor) : ViewModel() {
 
-    val albums = MutableLiveData<List<Album>>()
-    var userId: Int? = null
+    val albums: LiveData<List<Album>> get() = _albums
+    private val _albums = MutableLiveData<List<Album>>()
 
-    private fun receiveAlbums() {
-        interactor.receiveAlbums(userId) { albumItems ->
-            albums.postValue(albumItems)
+    fun receiveAlbums(userId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _albums.postValue(interactor.receiveAlbums(userId))
         }
-    }
-
-    init {
-        receiveAlbums()
     }
 }

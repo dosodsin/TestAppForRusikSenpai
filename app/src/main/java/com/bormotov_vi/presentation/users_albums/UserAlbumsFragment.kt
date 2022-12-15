@@ -4,47 +4,46 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bormotov_vi.R
 import com.bormotov_vi.databinding.FragmentUserAlbumsBinding
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_albums.recycler.AlbumsAdapter
 import com.bormotov_vi.presentation.users_albums.viewModel.UserAlbumViewModel
-import com.bormotov_vi.presentation.users_photos.UserPhotosFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class UserAlbumsFragment : BaseFragment() {
 
-    private var binding: FragmentUserAlbumsBinding? = null
+    private val binding: FragmentUserAlbumsBinding by viewBinding(CreateMethod.INFLATE)
     private var adapter: AlbumsAdapter? = null
-    val viewModel: UserAlbumViewModel by viewModels()
+    val viewModel: UserAlbumViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentUserAlbumsBinding.inflate(layoutInflater, container, false)
-        val imageBack = binding?.toolbar?.backImage
-        viewModel.userId = this.arguments?.getInt(USER_ID)
+    ): View {
+        this.arguments?.getInt(USER_ID)?.let { viewModel.receiveAlbums(it) }
         viewModel.albums.observe(viewLifecycleOwner) { albumsItems ->
-            val userPhotosFragment = UserPhotosFragment()
             adapter = AlbumsAdapter(albumsItems) { albumItem ->
-                this.arguments?.putInt(ALBUM_ID, albumItem.id)
-                userPhotosFragment.arguments = this.arguments
-                navigate(PHOTO_FRAGMENT_TAG, userPhotosFragment)
+                navigate(PHOTO_FRAGMENT_TAG, ALBUM_ID, albumItem.id)
             }
-            binding?.recyclerViewPost?.adapter = adapter
+            binding.recyclerViewPost.adapter = adapter
         }
 
-        imageBack?.setOnClickListener {
-            moveToPrevFragmentByToolbarBackImage()
+        with(binding) {
+            toolbar.backImage.setOnClickListener {
+                moveToPrevFragmentByToolbarBackImage()
+            }
         }
 
-        return binding?.root
+        return binding.root
     }
 
     companion object {
         const val USER_ID = "userId"
         const val ALBUM_ID = "albumId"
-        const val PHOTO_FRAGMENT_TAG = "userPhotosFragment"
+        const val PHOTO_FRAGMENT_TAG = R.id.action_userAlbumsFragment_to_userPhotosFragment
     }
 }

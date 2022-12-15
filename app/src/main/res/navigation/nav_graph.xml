@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment2">
+    <fragment
+        android:id="@+id/mainFragment2"
+        android:name="com.bormotov_vi.presentation.users_screen.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment2_to_userPostAndAlbumsFragment"
+            app:destination="@id/userPostAndAlbumsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userPostAndAlbumsFragment"
+        android:name="com.bormotov_vi.presentation.users_posts_and_albums.UserPostAndAlbumsFragment"
+        android:label="fragment_user_post_and_albums"
+        tools:layout="@layout/fragment_user_post_and_albums" >
+        <action
+            android:id="@+id/action_userPostAndAlbumsFragment_to_userPostsFragment"
+            app:destination="@id/userPostsFragment" />
+        <action
+            android:id="@+id/action_userPostAndAlbumsFragment_to_userAlbumsFragment"
+            app:destination="@id/userAlbumsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userPostsFragment"
+        android:name="com.bormotov_vi.presentation.users_posts.UserPostsFragment"
+        android:label="fragment_user_posts"
+        tools:layout="@layout/fragment_user_posts" >
+        <action
+            android:id="@+id/action_userPostsFragment_to_userCommentsFragment"
+            app:destination="@id/userCommentsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userCommentsFragment"
+        android:name="com.bormotov_vi.presentation.users_comments.UserCommentsFragment"
+        android:label="fragment_user_comments"
+        tools:layout="@layout/fragment_user_comments" />
+    <fragment
+        android:id="@+id/userAlbumsFragment"
+        android:name="com.bormotov_vi.presentation.users_albums.UserAlbumsFragment"
+        android:label="fragment_user_albums"
+        tools:layout="@layout/fragment_user_albums" >
+        <action
+            android:id="@+id/action_userAlbumsFragment_to_userPhotosFragment"
+            app:destination="@id/userPhotosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userPhotosFragment"
+        android:name="com.bormotov_vi.presentation.users_photos.UserPhotosFragment"
+        android:label="fragment_user_photos"
+        tools:layout="@layout/fragment_user_photos" />
+</navigation>

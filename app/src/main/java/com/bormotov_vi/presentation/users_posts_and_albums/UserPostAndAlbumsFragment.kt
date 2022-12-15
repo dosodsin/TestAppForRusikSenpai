@@ -4,48 +4,50 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bormotov_vi.R
 import com.bormotov_vi.databinding.FragmentUserPostAndAlbumsBinding
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
-import com.bormotov_vi.presentation.users_albums.UserAlbumsFragment
-import com.bormotov_vi.presentation.users_posts.UserPostsFragment
+import com.bormotov_vi.presentation.users_screen.MainFragment
 
 
 class UserPostAndAlbumsFragment : BaseFragment() {
 
-    private var binding: FragmentUserPostAndAlbumsBinding? = null
+    private val binding: FragmentUserPostAndAlbumsBinding by viewBinding(CreateMethod.INFLATE)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentUserPostAndAlbumsBinding.inflate(inflater, container, false)
-        val bundle = this.arguments
-        val postButton = binding?.postButton
-        val albumButton = binding?.albumButton
-        val backImage = binding?.toolbar?.backImage
+    ): View {
+        with(binding) {
+            postButton.setOnClickListener {
+                navigate(
+                    POST_FRAGMENT_TAG,
+                    MainFragment.USER_ID,
+                    requireArguments().getInt(MainFragment.USER_ID)
+                )
+            }
+            albumButton.setOnClickListener {
+                navigate(
+                    ALBUM_FRAGMENT_TAG,
+                    MainFragment.USER_ID,
+                    requireArguments().getInt(MainFragment.USER_ID)
+                )
+            }
+            toolbar.backImage.setOnClickListener {
+                moveToPrevFragmentByToolbarBackImage()
+            }
+        }
 
-        postButton?.setOnClickListener {
-            val userPostFragment = UserPostsFragment()
-            userPostFragment.arguments = bundle
-            navigate(POST_FRAGMENT_TAG, userPostFragment)
-        }
-        albumButton?.setOnClickListener {
-            val userAlbumFragment = UserAlbumsFragment()
-            userAlbumFragment.arguments = bundle
-            navigate(ALBUM_FRAGMENT_TAG, userAlbumFragment)
-        }
-        backImage?.setOnClickListener {
-            moveToPrevFragmentByToolbarBackImage()
-        }
-
-        return binding?.root
+        return binding.root
     }
-
 
     companion object {
 
-        const val POST_FRAGMENT_TAG = "userPostFragment"
-        const val ALBUM_FRAGMENT_TAG = "userAlbumFragment"
+        const val POST_FRAGMENT_TAG = R.id.action_userPostAndAlbumsFragment_to_userPostsFragment
+        const val ALBUM_FRAGMENT_TAG = R.id.action_userPostAndAlbumsFragment_to_userAlbumsFragment
+        const val POSTS_ALBUMS_TAG = R.id.action_mainFragment2_to_userPostAndAlbumsFragment
 
     }
 }
