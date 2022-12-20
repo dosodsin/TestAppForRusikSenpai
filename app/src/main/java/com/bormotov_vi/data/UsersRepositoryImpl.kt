@@ -7,10 +7,12 @@ import com.bormotov_vi.domain.model.post.UserPostItem
 import com.bormotov_vi.domain.model.user.UsersItem
 import com.bormotov_vi.domain.retrofit.RetrofitInstance.api
 import com.bormotov_vi.domain.user_interactor.UserRepository
+import kotlinx.coroutines.delay
 
 class UsersRepositoryImpl : UserRepository {
 
     override suspend fun receiveUsers(): List<UsersItem> {
+        delay(3000)
         return api.getUsers().body()!!
     }
 
