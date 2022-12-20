@@ -14,13 +14,20 @@ class UserItemsViewModel(
     private val interactor: UsersInteractor
 ) : ViewModel() {
 
-    private val _users = MutableStateFlow<List<UsersItem>>(emptyList())
-    val users: StateFlow<List<UsersItem>> = _users.asStateFlow()
+    private val _users = MutableStateFlow<ScreenState>(ScreenState.Initial)
+    val users: StateFlow<ScreenState> = _users.asStateFlow()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            _users.emit(interactor.receiveUsers())
+            //TODO
+            // _users.emit(interactor.receiveUsers())
         }
     }
+}
 
+sealed class ScreenState {
+    object Initial : ScreenState()
+    object Loading : ScreenState()
+    object Error : ScreenState()
+    data class Success(val users: List<UsersItem>)
 }
