@@ -1,13 +1,11 @@
 package com.bormotov_vi.presentation.users_posts.viewModel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bormotov_vi.domain.model.post.UserPostItem
-import com.bormotov_vi.domain.model.user.UsersItem
 import com.bormotov_vi.domain.user_interactor.UsersInteractor
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,13 +15,25 @@ class PostItemViewModel(
     private val interactor: UsersInteractor
 ) : ViewModel() {
 
-    private val _posts = MutableStateFlow<List<UserPostItem>>(emptyList())
-    val posts: StateFlow<List<UserPostItem>> = _posts.asStateFlow()
+    private val _posts = MutableStateFlow<ScreenState>(ScreenState.Initial)
+    val posts: StateFlow<ScreenState> = _posts.asStateFlow()
 
+    fun beforeReceivePosts(userId: Int) {
+        _posts.value = ScreenState.Loading
+        receivePosts(userId)
+    }
 
-    fun receivePosts(userId: Int) {
+    private fun receivePosts(userId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            _posts.emit(interactor.receivePosts(userId))
+            delay(1000L)
+            _posts.value = ScreenState.Success(interactor.receivePosts(userId))
         }
     }
+}
+
+sealed class ScreenState {
+    object Initial : ScreenState()
+    object Loading : ScreenState()
+    object Error : ScreenState()
+    data class Success(val posts: List<UserPostItem>) : ScreenState()
 }

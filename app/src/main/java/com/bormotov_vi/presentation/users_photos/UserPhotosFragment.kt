@@ -11,8 +11,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bormotov_vi.databinding.FragmentUserPhotosBinding
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_photos.recycler.PhotoAdapter
+import com.bormotov_vi.presentation.users_photos.viewModel.ScreenState
 import com.bormotov_vi.presentation.users_photos.viewModel.UserPhotosViewModel
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserPhotosFragment : BaseFragment() {
@@ -26,12 +26,20 @@ class UserPhotosFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel.receivePhotos(args.albumId)
 
-        lifecycleScope.launch {
-            viewModel.photos.collect { photoItems ->
-                adapter = PhotoAdapter(photoItems)
-                binding.photoRecyclerView.adapter = adapter
+        lifecycleScope.launchWhenCreated {
+            viewModel.beforeReceivePhotos(args.albumId)
+            viewModel.photos.collect {
+                when (it) {
+                    is ScreenState.Initial -> {
+                        binding.photoFragmentProgressBar.visibility = View.VISIBLE
+                    }
+                    is ScreenState.Success -> {
+                        binding.photoFragmentProgressBar.visibility = View.GONE
+                        adapter = PhotoAdapter(it.photos)
+                        binding.photoRecyclerView.adapter = adapter
+                    }
+                }
             }
         }
 

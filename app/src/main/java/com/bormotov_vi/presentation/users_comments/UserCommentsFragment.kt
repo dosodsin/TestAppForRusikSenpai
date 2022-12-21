@@ -11,8 +11,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bormotov_vi.databinding.FragmentUserCommentsBinding
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_comments.recycler.CommentAdapter
+import com.bormotov_vi.presentation.users_comments.viewModel.ScreenState
 import com.bormotov_vi.presentation.users_comments.viewModel.UserCommentsViewModel
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -27,13 +27,23 @@ class UserCommentsFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel.receiveComments(args.postId)
-        lifecycleScope.launch {
-            viewModel.comments.collect { commentItems ->
-                adapter = CommentAdapter(commentItems)
-                binding.commentsRecyclerView.adapter = adapter
+
+        lifecycleScope.launchWhenCreated {
+            viewModel.beforeReceiveComments(args.postId)
+            viewModel.comments.collect {
+                when (it) {
+                    is ScreenState.Loading -> {
+                        binding.commentsFragmentProgressBar.visibility = View.VISIBLE
+                    }
+                    is ScreenState.Success -> {
+                        binding.commentsFragmentProgressBar.visibility = View.GONE
+                        adapter = CommentAdapter(it.comments)
+                        binding.commentsRecyclerView.adapter = adapter
+                    }
+                }
             }
         }
+
 
         with(binding) {
             toolbar.backImage.setOnClickListener {

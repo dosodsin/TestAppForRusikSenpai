@@ -13,7 +13,7 @@ import com.bormotov_vi.databinding.FragmentUserPostsBinding
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_posts.recycler.PostAdapter
 import com.bormotov_vi.presentation.users_posts.viewModel.PostItemViewModel
-import kotlinx.coroutines.launch
+import com.bormotov_vi.presentation.users_posts.viewModel.ScreenState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserPostsFragment : BaseFragment() {
@@ -27,21 +27,28 @@ class UserPostsFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel.receivePosts(args.userId)
 
-        lifecycleScope.launch {
-            viewModel.posts.collect { postItems ->
-                adapter = PostAdapter(postItems) { postItem ->
-                    val directionToUserComments = UserPostsFragmentDirections
-                        .actionUserPostsFragmentToUserCommentsFragment()
-                        .setPostId(args.postId)
-                    findNavController()
-                        .navigate(directionToUserComments)
+        lifecycleScope.launchWhenCreated {
+            viewModel.beforeReceivePosts(args.userId)
+            viewModel.posts.collect{
+                when (it) {
+                    is ScreenState.Loading -> {
+                        binding.postsFragmentProgressBar.visibility = View.VISIBLE
+                    }
+                    is ScreenState.Success -> {
+                        binding.postsFragmentProgressBar.visibility = View.GONE
+                        adapter = PostAdapter(it.posts) { postItem ->
+                            val directionToUserComments = UserPostsFragmentDirections
+                                .actionUserPostsFragmentToUserCommentsFragment()
+                                .setPostId(args.postId)
+                            findNavController()
+                                .navigate(directionToUserComments)
+                        }
+                        binding.recyclerViewPost.adapter = adapter
+                    }
                 }
-                binding.recyclerViewPost.adapter = adapter
             }
         }
-
 
         with(binding) {
             toolbar.backImage.setOnClickListener {

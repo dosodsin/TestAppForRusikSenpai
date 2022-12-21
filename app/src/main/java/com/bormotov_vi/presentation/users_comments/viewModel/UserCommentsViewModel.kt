@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.bormotov_vi.domain.model.comment.Comment
 import com.bormotov_vi.domain.user_interactor.UsersInteractor
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,12 +15,25 @@ class UserCommentsViewModel(
     private val interactor: UsersInteractor
 ) : ViewModel() {
 
-    private val _comments = MutableStateFlow<List<Comment>>(emptyList())
-    val comments: StateFlow<List<Comment>> = _comments.asStateFlow()
+    private val _comments = MutableStateFlow<ScreenState>(ScreenState.Initial)
+    val comments: StateFlow<ScreenState> = _comments.asStateFlow()
 
-    fun receiveComments(postId: Int) {
+    fun beforeReceiveComments(postId: Int){
+        _comments.value = ScreenState.Loading
+        receiveComments(postId)
+    }
+
+    private fun receiveComments(postId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            _comments.emit(interactor.receiveComments(postId))
+            delay(1000L)
+            _comments.value = ScreenState.Success(interactor.receiveComments(postId))
         }
     }
+}
+
+sealed class ScreenState {
+    object Initial : ScreenState()
+    object Loading : ScreenState()
+    object Error : ScreenState()
+    data class Success(val comments: List<Comment>) : ScreenState()
 }

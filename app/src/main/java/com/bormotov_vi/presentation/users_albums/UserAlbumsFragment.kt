@@ -12,8 +12,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bormotov_vi.databinding.FragmentUserAlbumsBinding
 import com.bormotov_vi.presentation.base_fragment.BaseFragment
 import com.bormotov_vi.presentation.users_albums.recycler.AlbumsAdapter
+import com.bormotov_vi.presentation.users_albums.viewModel.ScreenState
 import com.bormotov_vi.presentation.users_albums.viewModel.UserAlbumViewModel
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -28,17 +28,26 @@ class UserAlbumsFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel.receiveAlbums(args.userId)
-        lifecycleScope.launch {
-            viewModel.albums.collect { albumsItems ->
-                adapter = AlbumsAdapter(albumsItems) { albumItem ->
-                    val directionsToUserPhotos = UserAlbumsFragmentDirections
-                        .actionUserAlbumsFragmentToUserPhotosFragment()
-                        .setAlbumId(albumItem.id)
-                    findNavController()
-                        .navigate(directionsToUserPhotos)
+
+        lifecycleScope.launchWhenCreated {
+            viewModel.beforeReceiveAlbums(args.userId)
+            viewModel.albums.collect {
+                when (it) {
+                    is ScreenState.Loading -> {
+                        binding.albumsFragmentProgressBar.visibility = View.VISIBLE
+                    }
+                    is ScreenState.Success -> {
+                        binding.albumsFragmentProgressBar.visibility = View.GONE
+                        adapter = AlbumsAdapter(it.albums) { albumItem ->
+                            val directionsToUserPhotos = UserAlbumsFragmentDirections
+                                .actionUserAlbumsFragmentToUserPhotosFragment()
+                                .setAlbumId(albumItem.id)
+                            findNavController()
+                                .navigate(directionsToUserPhotos)
+                        }
+                        binding.recyclerViewAlbums.adapter = adapter
+                    }
                 }
-                binding.recyclerViewPost.adapter = adapter
             }
         }
 
