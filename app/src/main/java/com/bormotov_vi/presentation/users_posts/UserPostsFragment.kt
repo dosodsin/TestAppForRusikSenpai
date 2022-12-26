@@ -30,7 +30,7 @@ class UserPostsFragment : BaseFragment() {
 
         lifecycleScope.launchWhenCreated {
             viewModel.beforeReceivePosts(args.userId)
-            viewModel.posts.collect{
+            viewModel.posts.collect {
                 when (it) {
                     is ScreenState.Loading -> {
                         binding.postsFragmentProgressBar.visibility = View.VISIBLE

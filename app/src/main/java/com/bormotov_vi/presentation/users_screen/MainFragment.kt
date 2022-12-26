@@ -31,11 +31,13 @@ class MainFragment : BaseFragment() {
             viewModel.users.collect {
                 when (it) {
                     is ScreenState.Loading -> {
-                        binding.mainFragmentProgressBar.visibility = View.VISIBLE
+                        binding.shimmer.startShimmer()
                     }
 
                     is ScreenState.Success -> {
-                        binding.mainFragmentProgressBar.visibility = View.GONE
+                        binding.shimmer.stopShimmer()
+                        binding.shimmer.visibility = View.GONE
+                        binding.mainFragmentRecyclerView.visibility = View.VISIBLE
                         adapter = UserAdapter(it.users) { userItem ->
                             val directionToUserPostsAndAlbumsFragment = MainFragmentDirections
                                 .actionMainFragment2ToUserPostAndAlbumsFragment()
